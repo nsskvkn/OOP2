@@ -5,88 +5,88 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab3._2
+namespace Lab3_2.Collections
 {
     public class Node<T> where T : class
     {
         public T Value { get; set; }
         public Node<T>? Left { get; set; }
         public Node<T>? Right { get; set; }
-
-        public Node(T value)
-        {
-            Value = value;
-            Left = null;
-            Right = null;
-        }
+        public Node(T value) { Value = value; }
     }
 
-    public class BinaryTree<T> : IEnumerable<T> where T : class, IComparable<T>
+    // Узагальнене бінарне дерево з підтримкою IComparer<T>
+    public class BinaryTree<T> : IEnumerable<T> where T : class
     {
-        public Node<T> Root { get; private set; }
+        private readonly IComparer<T>? _comparer;
+        public Node<T>? Root { get; private set; }
 
-        public BinaryTree(T value)
+        public BinaryTree(IComparer<T>? comparer = null)
         {
-            Root = new Node<T>(value);
+            _comparer = comparer;
         }
 
-        public BinaryTree(ICollection<T> values)
+        public BinaryTree(IEnumerable<T> values, IComparer<T>? comparer = null) : this(comparer)
         {
-            if (values == null || values.Count == 0) throw new ArgumentException("Values collection must not be empty.");
-            using var e = values.GetEnumerator();
-            e.MoveNext();
-            Root = new Node<T>(e.Current!); 
-            while (e.MoveNext())
-            {
-                Insert(e.Current!);
-            }
+            if (values == null) throw new ArgumentNullException(nameof(values));
+            foreach (var v in values) Insert(v);
         }
 
-        public void Insert(T value) => Insert(value, Root);
-
-        private Node<T> Insert(T value, Node<T>? parent)
+        // Порівняння з урахуванням IComparer або IComparable
+        private int Compare(T x, T y)
         {
-            if (parent == null) return new Node<T>(value);
-            int compared = value.CompareTo(parent.Value);
-            if (compared < 0)
-            {
-                parent.Left = Insert(value, parent.Left);
-            }
-            else if (compared > 0)
-            {
-                parent.Right = Insert(value, parent.Right);
-            }
-            return parent;
+            if (_comparer != null) return _comparer.Compare(x, y);
+            if (x is IComparable<T> cmpT) return cmpT.CompareTo(y);
+            if (x is IComparable cmp) return cmp.CompareTo(y);
+            throw new InvalidOperationException("Type T must be comparable via IComparer<T> or IComparable.");
         }
 
+        public void Insert(T value)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            Root = InsertNode(Root, value);
+        }
+
+        private Node<T> InsertNode(Node<T>? node, T value)
+        {
+            if (node == null) return new Node<T>(value);
+            int c = Compare(value, node.Value);
+            if (c < 0) node.Left = InsertNode(node.Left, value);
+            else if (c > 0) node.Right = InsertNode(node.Right, value);
+            else
+            {
+                // values equal -> decide: skip or insert to right (зараз пропускаємо дублікати)
+            }
+            return node;
+        }
+
+        // Find: повертає перший елемент, що задовольняє предикат
         public T? Find(Predicate<T> predicate)
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
-            foreach (var v in this)
-            {
-                if (predicate(v)) return v;
-            }
+            foreach (var v in this) if (predicate(v)) return v;
             return null;
         }
 
+        // Ітератор — preorder (прямий порядок): current, left, right
         public IEnumerator<T> GetEnumerator()
         {
-            return TraverseInOrder(Root).GetEnumerator();
+            return TraversePreOrder(Root).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private static IEnumerable<T> TraverseInOrder(Node<T>? node)
+        private IEnumerable<T> TraversePreOrder(Node<T>? node)
         {
             if (node == null) yield break;
+            yield return node.Value;
             if (node.Left != null)
             {
-                foreach (var v in TraverseInOrder(node.Left)) yield return v;
+                foreach (var v in TraversePreOrder(node.Left)) yield return v;
             }
-            yield return node.Value;
             if (node.Right != null)
             {
-                foreach (var v in TraverseInOrder(node.Right)) yield return v;
+                foreach (var v in TraversePreOrder(node.Right)) yield return v;
             }
         }
     }
