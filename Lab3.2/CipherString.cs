@@ -3,13 +3,12 @@ using System.Text;
 
 namespace Lab3._2
 {
-    // Клас рядка з простим шифруванням зсувом символів
     public class CipherString : IComparable<CipherString>
     {
         public string Value { get; private set; }
         public int Length => Value?.Length ?? 0;
 
-        // Закритий ключ: ціле зміщення (може бути від'ємним) і напрямок (як знак)
+        // Закритий ключ: ціле зміщення
         private int Key { get; set; }
 
         public CipherString(string value, int key = 0)
@@ -46,13 +45,15 @@ namespace Lab3._2
 
         public override string ToString() => $"\"{Value}\" (len={Length}, key={Key})";
 
-        // Порівняння за довжиною, далі лексикографічно
+        // Порівняння за довжиною
         public int CompareTo(CipherString? other)
         {
             if (other == null) return 1;
             int cmp = this.Length.CompareTo(other.Length);
             if (cmp != 0) return cmp;
-            return string.Compare(this.Value, other.Value, StringComparison.Ordinal);
+            cmp = string.Compare(this.Value, other.Value, StringComparison.Ordinal);
+            if (cmp != 0) return cmp;
+            return this.Key.CompareTo(other.Key);
         }
     }
 }

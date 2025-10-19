@@ -15,7 +15,7 @@ namespace Lab3_2.Collections
         public Node(T value) { Value = value; }
     }
 
-    // Узагальнене бінарне дерево з підтримкою IComparer<T>
+    // Узагальнене бінарне дерево
     public class BinaryTree<T> : IEnumerable<T> where T : class
     {
         private readonly IComparer<T>? _comparer;
@@ -38,7 +38,7 @@ namespace Lab3_2.Collections
             if (_comparer != null) return _comparer.Compare(x, y);
             if (x is IComparable<T> cmpT) return cmpT.CompareTo(y);
             if (x is IComparable cmp) return cmp.CompareTo(y);
-            throw new InvalidOperationException("Type T must be comparable via IComparer<T> or IComparable.");
+            throw new InvalidOperationException("Тип T має бути порівнянним через IComparer<T> або IComparable.");
         }
 
         public void Insert(T value)
@@ -53,10 +53,7 @@ namespace Lab3_2.Collections
             int c = Compare(value, node.Value);
             if (c < 0) node.Left = InsertNode(node.Left, value);
             else if (c > 0) node.Right = InsertNode(node.Right, value);
-            else
-            {
-                // values equal -> decide: skip or insert to right (зараз пропускаємо дублікати)
-            }
+            else {}
             return node;
         }
 
@@ -68,7 +65,7 @@ namespace Lab3_2.Collections
             return null;
         }
 
-        // Ітератор — preorder (прямий порядок): current, left, right
+        // Рreorder: current, left, right
         public IEnumerator<T> GetEnumerator()
         {
             return TraversePreOrder(Root).GetEnumerator();

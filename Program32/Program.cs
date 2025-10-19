@@ -14,7 +14,7 @@ namespace Lab3_Program
         static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.WriteLine("=== Демонстрація: CipherString, колекції, бінарне дерево (preorder) ===\n");
+            Console.WriteLine("Демонстрація: CipherString, колекції, бінарне дерево (preorder)");
 
             // 1) Generic List<CipherString>
             var list = new List<CipherString>
