@@ -2,30 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using System.Threading.Tasks;
 
 namespace Lab3._3
-
 {
-    public class XmlProvider : IDataProvider
+    public class XmlProvider<T> : IDataProvider<T>
     {
-        public List<CipherString> Load(string path)
+        public void Save(string path, IEnumerable<T> items)
         {
-            if (!File.Exists(path)) return new List<CipherString>();
-            var serializer = new XmlSerializer(typeof(List<CipherString>));
-            using (var stream = File.OpenRead(path))
-            {
-                return (List<CipherString>)serializer.Deserialize(stream);
-            }
+            var serializer = new XmlSerializer(typeof(List<T>));
+            using var fs = File.Create(path);
+            serializer.Serialize(fs, new List<T>(items));
         }
 
-        public void Save(string path, IEnumerable<CipherString> items)
+        public IEnumerable<T> Load(string path)
         {
-            var serializer = new XmlSerializer(typeof(List<CipherString>));
-            using (var stream = File.Create(path))
-            {
-                serializer.Serialize(stream, new List<CipherString>(items));
-            }
+            if (!File.Exists(path)) return new List<T>();
+            var serializer = new XmlSerializer(typeof(List<T>));
+            using var fs = File.OpenRead(path);
+            return (List<T>)serializer.Deserialize(fs)!;
         }
     }
 }
+

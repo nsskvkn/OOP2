@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Text.Json;
 
 namespace Lab3._3
 
 {
-    public class JsonProvider : IDataProvider
+    public class JsonProvider<T> : IDataProvider<T>
     {
-        private readonly JsonSerializerOptions _opts = new JsonSerializerOptions { WriteIndented = true };
-
-        public List<CipherString> Load(string path)
+        public void Save(string path, IEnumerable<T> items)
         {
-            if (!File.Exists(path)) return new List<CipherString>();
-            string json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<List<CipherString>>(json, _opts) ?? new List<CipherString>();
+            var json = JsonSerializer.Serialize(items);
+            File.WriteAllText(path, json);
         }
 
-        public void Save(string path, IEnumerable<CipherString> items)
+        public IEnumerable<T> Load(string path)
         {
-            var json = JsonSerializer.Serialize(items, _opts);
-            File.WriteAllText(path, json);
+            if (!File.Exists(path)) return new List<T>();
+            var json = File.ReadAllText(path);
+            return JsonSerializer.Deserialize<IEnumerable<T>>(json) ?? new List<T>();
         }
     }
 }
-

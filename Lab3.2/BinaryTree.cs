@@ -32,7 +32,7 @@ namespace Lab3_2.Collections
             foreach (var v in values) Insert(v);
         }
 
-        // Порівняння з урахуванням IComparer або IComparable
+        // Порівняння з IComparable
         private int Compare(T x, T y)
         {
             if (_comparer != null) return _comparer.Compare(x, y);
@@ -57,7 +57,6 @@ namespace Lab3_2.Collections
             return node;
         }
 
-        // Find: повертає перший елемент, що задовольняє предикат
         public T? Find(Predicate<T> predicate)
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
@@ -65,7 +64,6 @@ namespace Lab3_2.Collections
             return null;
         }
 
-        // Рreorder: current, left, right
         public IEnumerator<T> GetEnumerator()
         {
             return TraversePreOrder(Root).GetEnumerator();

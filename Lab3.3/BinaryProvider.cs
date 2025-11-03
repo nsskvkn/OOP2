@@ -1,50 +1,26 @@
-﻿using System;
+﻿#pragma warning disable SYSLIB0011
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Lab3._3
-
+namespace Lab3.DAL.DataProviders
 {
-    public class BinaryProvider : IDataProvider
+    public class BinaryProvider<T> : _3.IDataProvider<T>
     {
-        public List<CipherString> Load(string path)
+        public void Save(string path, IEnumerable<T> items)
         {
-            var result = new List<CipherString>();
-            if (!File.Exists(path)) return result;
-
-            using (var br = new BinaryReader(File.OpenRead(path)))
-            {
-                try
-                {
-                    int count = br.ReadInt32();
-                    for (int i = 0; i < count; i++)
-                    {
-                        string value = br.ReadString();
-                        int key = br.ReadInt32();
-                        bool dir = br.ReadBoolean();
-                        result.Add(new CipherString(value, key, dir));
-                    }
-                }
-                catch (EndOfStreamException) { /* файл пошкоджено */ }
-            }
-            return result;
+            var bf = new BinaryFormatter();
+            using var fs = File.Create(path);
+            bf.Serialize(fs, new List<T>(items));
         }
 
-        public void Save(string path, IEnumerable<CipherString> items)
+        public IEnumerable<T> Load(string path)
         {
-            using (var bw = new BinaryWriter(File.Create(path)))
-            {
-                var list = new List<CipherString>(items);
-                bw.Write(list.Count);
-                foreach (var it in list)
-                {
-                    bw.Write(it.Value ?? string.Empty);
-                    bw.Write(it.Key);
-                    bw.Write(it.Direction);
-                }
-            }
+            if (!File.Exists(path)) return new List<T>();
+            var bf = new BinaryFormatter();
+            using var fs = File.OpenRead(path);
+            return (List<T>)bf.Deserialize(fs);
         }
     }
 }
+#pragma warning restore SYSLIB0011

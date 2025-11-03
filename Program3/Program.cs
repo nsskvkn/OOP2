@@ -1,4 +1,5 @@
 ﻿using System;
+using Lab3._3;
 
 namespace Program3
 {
@@ -6,8 +7,10 @@ namespace Program3
     {
         static void Main()
         {
-            var menu = new Menu();
-            menu.MainMenu();
+            AppContext.SetSwitch("System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization", true);
+            Menu.MainMenu();
+            Console.WriteLine("...");
+            Console.ReadLine();
         }
     }
 }

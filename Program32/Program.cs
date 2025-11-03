@@ -13,7 +13,6 @@ namespace Lab3_Program
     {
         static void Main()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine("Демонстрація: CipherString, колекції, бінарне дерево (preorder)");
 
             // 1) Generic List<CipherString>
@@ -25,7 +24,7 @@ namespace Lab3_Program
         };
             Console.WriteLine("Generic List:");
             foreach (var s in list) Console.WriteLine(" " + s);
-            // До/видал/оновл
+
             list.Add(new CipherString("new", 1));
             list.RemoveAt(0);
             list[0] = new CipherString("replaced", 5);
@@ -51,7 +50,7 @@ namespace Lab3_Program
             for (int i = 0; i < arr.Length; i++) Console.WriteLine($" [{i}] {arr[i]}");
             Console.WriteLine(new string('-', 40));
 
-            // 4) BinaryTree (preorder) — використовуємо стандартне порівняння (IComparable)
+            // 4) BinaryTree (preorder)
             var tree = new BinaryTree<CipherString>();
             foreach (var s in list) tree.Insert(s);
             tree.Insert(new CipherString("yy", 2));
@@ -59,13 +58,17 @@ namespace Lab3_Program
             foreach (var s in tree) Console.WriteLine(" " + s);
             Console.WriteLine(new string('-', 40));
 
-            // Демонстрація шифрування/дешифрування
+            // Шифрування/дешифрування
             var demo = new CipherString("Test123", 1);
             Console.WriteLine("Before: " + demo);
             demo.Encrypt();
             Console.WriteLine("Encrypted: " + demo);
             demo.Decrypt();
             Console.WriteLine("Decrypted: " + demo);
+
+            var cip1 = new CipherString("Sdfsd");
+            var cip2 = new CipherString("Sdfsd");
+            int a = cip1.CompareTo(cip2);
         }
     }
 }

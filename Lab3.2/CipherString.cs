@@ -8,7 +8,6 @@ namespace Lab3._2
         public string Value { get; private set; }
         public int Length => Value?.Length ?? 0;
 
-        // Закритий ключ: ціле зміщення
         private int Key { get; set; }
 
         public CipherString(string value, int key = 0)
@@ -17,7 +16,6 @@ namespace Lab3._2
             Key = key;
         }
 
-        // Шифрування: зсув Unicode-кодів на Key
         public void Encrypt()
         {
             if (Key == 0) return;
@@ -29,7 +27,7 @@ namespace Lab3._2
             Value = sb.ToString();
         }
 
-        // Дешифрування: зсув назад
+
         public void Decrypt()
         {
             if (Key == 0) return;
