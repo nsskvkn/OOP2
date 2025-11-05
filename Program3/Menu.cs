@@ -10,8 +10,6 @@ namespace Program3
     {
         public static void MainMenu()
         {
-            Console.WriteLine("Лабораторна 3.3 — Варіант 10");
-            // Приклад: демонстрація роботи з рядками
             var stringEntities = new List<StringEntity>
             {
                 new StringEntity("Hello, world!", 2),
@@ -42,7 +40,43 @@ namespace Program3
                 Console.WriteLine("----");
             }
 
-            // Далі: робота зі студентами, вибір файлу, підрахунок студенток 5-го курсу, що постійно проживають у Києві.
+            //Робота зі студентами
+            var students = new List<StudentEntity>
+            {
+             new StudentEntity { LastName = "Іваненко", FirstName = "Марія", Course = 5, StudentId = "ST001", Sex = "Ж", Residence = "Київ", RecordBookNumber = "RB101" },
+             new StudentEntity { LastName = "Петренко", FirstName = "Олег", Course = 4, StudentId = "ST002", Sex = "Ч", Residence = "Київ", RecordBookNumber = "RB102" },
+             new StudentEntity { LastName = "Сидоренко", FirstName = "Олена", Course = 5, StudentId = "ST003", Sex = "Ж", Residence = "Львів", RecordBookNumber = "RB103" },
+             new StudentEntity { LastName = "Гончар", FirstName = "Юлія", Course = 5, StudentId = "ST004", Sex = "Ж", Residence = "Київ", RecordBookNumber = "RB104" }
+            };
+
+            Console.WriteLine("\n=== Серіалізація студентів ===");
+            Console.WriteLine("Оберіть формат: 1 - JSON, 2 - XML, 3 - Binary");
+            var studentChoice = Console.ReadLine();
+            string studentPath = "students";
+            IDataProvider<StudentEntity> studentProvider = new JsonProvider<StudentEntity>();
+
+            if (studentChoice == "1") { studentPath += ".json"; studentProvider = new JsonProvider<StudentEntity>(); }
+            else if (studentChoice == "2") { studentPath += ".xml"; studentProvider = new XmlProvider<StudentEntity>(); }
+            else if (studentChoice == "3") { studentPath += ".bin"; studentProvider = new BinaryProvider<StudentEntity>(); }
+
+            var studentCtx = new EntityContext<StudentEntity>(studentProvider);
+            studentCtx.Save(studentPath, students);
+
+            var loadedStudents = studentCtx.Load(studentPath);
+            var studentService = new StudentService();
+
+            try
+            {
+                var selected = studentService.FemaleFifthCourseInKyiv(loadedStudents);
+                Console.WriteLine("\nСтудентки 5-го курсу, які постійно проживають у Києві:");
+                foreach (var s in selected)
+                    Console.WriteLine($" - {s.LastName} {s.FirstName}, {s.Residence}");
+            }
+            catch (BusinessLogicException ex)
+            {
+                Console.WriteLine("Помилка бізнес-логіки: " + ex.Message);
+            }
+
         }
     }
 }
