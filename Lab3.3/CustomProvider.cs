@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Lab3._3
 {
-    // Простий line-based custom формат: кожен об'єкт — один рядок поля через '|'
     public class CustomProvider : IDataProvider<string>
     {
         public void Save(string path, IEnumerable<string> items)

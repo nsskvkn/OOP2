@@ -9,7 +9,6 @@ namespace Lab3._3
 {
     public class StringService
     {
-        // Шифрування: для кожного символу змінюємо код на код +/- key
         public string Encrypt(StringEntity s)
         {
             if (s == null || s.Value == null) return string.Empty;
@@ -28,6 +27,5 @@ namespace Lab3._3
             return sb.ToString();
         }
 
-        // Додаткові методи: серіалізація колекції (делегуються DAL DataProvider-ам)
     }
 }
