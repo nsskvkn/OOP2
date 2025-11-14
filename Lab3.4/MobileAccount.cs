@@ -24,7 +24,7 @@ public class MobileAccount
     public void TopUp(decimal amount)
     {
         if (amount <= 0)
-            throw new ArgumentException("Amount must be positive");
+            throw new ArgumentException("Сума має бути позитивною");
         this.balance += amount;
         Console.WriteLine($"[MobileAccount] Поповнення: +{amount}. Поточний баланс = {this.balance}");
     }
@@ -32,7 +32,7 @@ public class MobileAccount
     public void Use(decimal amount)
     {
         if (amount <= 0)
-            throw new ArgumentException("Amount must be positive");
+            throw new ArgumentException("Сума має бути позитивною");
         if (amount > this.balance)
             throw new InvalidOperationException("Недостатньо коштів на рахунку");
 

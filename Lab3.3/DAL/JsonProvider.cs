@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Lab3._3
+namespace Lab3._3.DAL
 
 {
     public class JsonProvider<T> : IDataProvider<T>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab3._3
+namespace Lab3._3.DAL
 {
     public class EntityContext<T>
     {

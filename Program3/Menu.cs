@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lab3._3;
+using Lab3._3.BLL;
+using Lab3._3.DAL;
 using Lab3.DAL.DataProviders;
 
 namespace Program3

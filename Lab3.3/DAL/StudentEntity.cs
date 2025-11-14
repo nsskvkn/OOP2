@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Lab3._3
+namespace Lab3._3.DAL
 {
     [Serializable]
     public class StudentEntity

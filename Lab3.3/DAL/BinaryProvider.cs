@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Lab3.DAL.DataProviders
+namespace Lab3._3.DAL
 {
-    public class BinaryProvider<T> : _3.IDataProvider<T>
+    public class BinaryProvider<T> : IDataProvider<T>
     {
         public void Save(string path, IEnumerable<T> items)
         {

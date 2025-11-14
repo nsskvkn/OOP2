@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lab3._3;
+using Lab3._3.DAL;
 
-namespace Lab3._3
+namespace Lab3._3.BLL
 {
     public class StringService
     {
@@ -14,7 +14,7 @@ namespace Lab3._3
             if (s == null || s.Value == null) return string.Empty;
             var sb = new StringBuilder();
             foreach (var ch in s.Value)
-                sb.Append((char)(ch + s.Key)); // якщо key <0 — зменшуємо
+                sb.Append((char)(ch + s.Key)); 
             return sb.ToString();
         }
 

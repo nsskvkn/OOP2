@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Threading.Tasks;
 
-namespace Lab3._3
+namespace Lab3._3.DAL
 {
     public class XmlProvider<T> : IDataProvider<T>
     {

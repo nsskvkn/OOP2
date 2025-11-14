@@ -6,9 +6,7 @@ static class Program
 {
     static void Main()
     {
-        Console.WriteLine("=============================");
-        Console.WriteLine("Part 1 — Делегати і лямбда");
-        Console.WriteLine("=============================\n");
+        Console.WriteLine("Делегати і лямбда");
 
         int[,] matrix = {
             { 1, 2, 3 },
@@ -16,7 +14,6 @@ static class Program
             { 7, 8, 9 }
         };
 
-        // Анонімний метод
         DiagonalExtractor anonExtractor = delegate (int[,] m) {
             int n = Math.Min(m.GetLength(0), m.GetLength(1));
             int[] result = new int[n];
@@ -26,9 +23,8 @@ static class Program
         };
 
         int[] diagAnon = anonExtractor.Invoke(matrix);
-        Console.WriteLine($"Anonymous function result: {string.Join(", ", diagAnon)}");
+        Console.WriteLine($"Результат анонімної функції: {string.Join(", ", diagAnon)}");
 
-        // Лямбда-вираз
         DiagonalExtractor lambdaExtractor = (m) => {
             int n = Math.Min(m.GetLength(0), m.GetLength(1));
             int[] result = new int[n];
@@ -38,11 +34,9 @@ static class Program
         };
 
         int[] diagLambda = lambdaExtractor.Invoke(matrix);
-        Console.WriteLine($"Lambda function result: {string.Join(", ", diagLambda)}");
+        Console.WriteLine($"Результат анонімної функції: {string.Join(", ", diagLambda)}");
 
-        Console.WriteLine("\n=============================");
-        Console.WriteLine("Part 2 — Події (MobileAccount)");
-        Console.WriteLine("=============================\n");
+        Console.WriteLine("Події (MobileAccount)");
 
         var account = new MobileAccount(50m, 10m);
         account.BalanceUsed += onBalanceUsed;
@@ -50,11 +44,11 @@ static class Program
 
         account.TopUp(20m);
         account.Use(30m);
-        account.Use(25m); // спрацює подія "BalanceReachedMinimum"
+        account.Use(25m);
         account.TopUp(10m);
-        account.Use(45m); // знову спрацює BalanceReachedMinimum
+        account.Use(45m); 
 
-        Console.WriteLine("\nProgram finished. Press any key...");
+        Console.WriteLine("...");
         Console.ReadKey();
     }
 
