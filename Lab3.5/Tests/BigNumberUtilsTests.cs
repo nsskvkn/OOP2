@@ -1,39 +1,40 @@
 ﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lab3._5.BLL;
-using NUnit.Framework;
 
 namespace Lab3._5.Tests
 {
+    [TestFixture]
     public class BigNumberUtilsTests
     {
         [Test]
         public void Multiply_LongNumbers_ReturnsCorrectResult()
         {
             string r = BigNumberUtils.Multiply("123456789", "987654321");
-            Assert.AreEqual("121932631112635269", r);
+            Assert.That(r, Is.EqualTo("121932631112635269"));
         }
 
         [Test]
         public void Multiply_ByZero_ReturnsZero()
         {
-            Assert.AreEqual("0", BigNumberUtils.Multiply("12345", "0"));
-            Assert.AreEqual("0", BigNumberUtils.Multiply("0", "999"));
+            Assert.That(BigNumberUtils.Multiply("12345", "0"), Is.EqualTo("0"));
+            Assert.That(BigNumberUtils.Multiply("0", "999"), Is.EqualTo("0"));
         }
 
         [Test]
         public void Multiply_SingleDigit()
         {
-            Assert.AreEqual("18", BigNumberUtils.Multiply("3", "6"));
+            Assert.That(BigNumberUtils.Multiply("3", "6"), Is.EqualTo("18"));
         }
 
         [Test]
         public void Multiply_DifferentLengthNumbers()
         {
-            Assert.AreEqual("56088", BigNumberUtils.Multiply("123", "456"));
+            Assert.That(BigNumberUtils.Multiply("123", "456"), Is.EqualTo("56088"));
         }
 
         [Test]

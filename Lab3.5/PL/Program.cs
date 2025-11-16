@@ -23,10 +23,10 @@ namespace Lab3._5.PL
             foreach (var s in femalesInKyiv)
                 Console.WriteLine(s);
 
-            Console.WriteLine("\nМноження великих чисел:");
+            Console.WriteLine("Множення великих чисел:");
             Console.WriteLine(BigNumberUtils.Multiply("123456789", "987654321"));
 
-            Console.WriteLine("\nДодаткові уміння:");
+            Console.WriteLine("Додаткові уміння:");
             new Photographer("Олег").TakePhoto("Професійний фотоапарат");
             new Joiner("Петро").DoJoin();
         }

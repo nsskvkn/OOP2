@@ -52,13 +52,13 @@ namespace Lab3._5.DAL
                 Enum.TryParse<Sex>(Sex, true, out var sexParsed);
 
                 return new Student(
-                    LastName,
-                    FirstName,
+                    LastName!,
+                    FirstName!,
                     Course,
-                    StudentId,
+                    StudentId!,
                     sexParsed,
-                    Residence,
-                    GradebookNumber
+                    Residence!,
+                    GradebookNumber!
                 );
             }
 

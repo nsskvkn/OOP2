@@ -11,17 +11,11 @@ namespace Lab3._5.BLL
     {
         private readonly IStudentRepository _repo;
         private List<Student> _cache;
-        private JsonFileStudentRepository repo;
 
         public StudentService(IStudentRepository repo)
         {
             _repo = repo;
             _cache = _repo.LoadAll().ToList();
-        }
-
-        public StudentService(JsonFileStudentRepository repo)
-        {
-            this.repo = repo;
         }
 
         public IEnumerable<Student> GetFemaleFifthCourseInCity(string city)
@@ -31,7 +25,8 @@ namespace Lab3._5.BLL
                 s.LivesPermanentlyIn(city));
         }
 
-        public int CountFemaleFifthCourseInCity(string city) => GetFemaleFifthCourseInCity(city).Count();
+        public int CountFemaleFifthCourseInCity(string city) =>
+            GetFemaleFifthCourseInCity(city).Count();
 
         public void MoveStudent(Student student, string newResidence, bool assignDorm = true)
         {

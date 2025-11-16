@@ -12,8 +12,8 @@ namespace Lab3._5.Tests
 {
     public class StudentServiceTests
     {
-        private Mock<IStudentRepository> _repo;
-        private StudentService _service;
+        private Mock<IStudentRepository> _repo = null!;
+        private StudentService _service = null!;
 
         [SetUp]
         public void Setup()
@@ -35,20 +35,20 @@ namespace Lab3._5.Tests
         public void GetFemaleFifthCourseInCity_Kyiv_ReturnsCorrectStudents()
         {
             var list = _service.GetFemaleFifthCourseInCity("Київ").ToList();
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
         }
 
         [Test]
         public void CountFemaleFifthCourseInCity_ReturnsNumber()
         {
-            Assert.AreEqual(2, _service.CountFemaleFifthCourseInCity("Київ"));
+            Assert.That(_service.CountFemaleFifthCourseInCity("Київ"), Is.EqualTo(2));
         }
 
         [Test]
         public void GetFemaleFifthCourseInCity_EmptyCity_ReturnsEmptyList()
         {
             var list = _service.GetFemaleFifthCourseInCity("").ToList();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Lab3._5.Tests
 
             _service.MoveStudent(s, "Львів", assignDorm: false);
 
-            Assert.AreEqual("Львів", s.Residence);
+            Assert.That(s.Residence, Is.EqualTo("Львів"));
 
             _repo.Verify(r => r.SaveAll(It.IsAny<IEnumerable<Student>>()), Times.Once);
         }
@@ -74,14 +74,14 @@ namespace Lab3._5.Tests
 
             _service.MoveStudent(s, "Одеса", assignDorm: true);
 
-            Assert.IsTrue(s.Residence.StartsWith("(Гуртожиток)"));
+            Assert.That(s.Residence.StartsWith("(Гуртожиток)"));
         }
 
         [Test]
         public void MoveStudent_Throws_OnNull()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                _service.MoveStudent(null, "Одеса"));
+                _service.MoveStudent(null!, "Одеса"));
         }
     }
 }

@@ -28,30 +28,30 @@ namespace Lab3._5.Tests
         [Test]
         public void LoadAll_ReturnsEmpty_WhenFileMissing()
         {
-            File.Delete(_path);
-            var repo = new JsonFileStudentRepository(_path);
+            File.Delete(_path!);
+            var repo = new JsonFileStudentRepository(_path!);
 
             var list = repo.LoadAll().ToList();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void SaveAll_CreatesFile()
         {
-            var repo = new JsonFileStudentRepository(_path);
+            var repo = new JsonFileStudentRepository(_path!);
 
             repo.SaveAll(new List<Student>
             {
                 new Student("A","B",3,"S1",Sex.Female,"Kyiv","Z1")
             });
 
-            Assert.IsTrue(File.Exists(_path));
+            Assert.That(File.Exists(_path), Is.True);
         }
 
         [Test]
         public void SaveLoad_CycleTest()
         {
-            var repo = new JsonFileStudentRepository(_path);
+            var repo = new JsonFileStudentRepository(_path!);
 
             var original = new List<Student>
             {
@@ -63,9 +63,9 @@ namespace Lab3._5.Tests
 
             var loaded = repo.LoadAll().ToList();
 
-            Assert.AreEqual(2, loaded.Count);
-            Assert.AreEqual("A", loaded[0].LastName);
-            Assert.AreEqual("Lviv", loaded[1].Residence);
+            Assert.That(loaded.Count, Is.EqualTo(2));
+            Assert.That(loaded[0].LastName, Is.EqualTo("A"));
+            Assert.That(loaded[1].Residence, Is.EqualTo("Lviv"));
         }
     }
 }

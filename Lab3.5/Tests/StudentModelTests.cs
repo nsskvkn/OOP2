@@ -15,9 +15,9 @@ namespace Lab3._5.Tests
         {
             var s = new Student("Іваненко", "Олена", 3, "S1", Sex.Female, "Київ", "Z1");
 
-            Assert.AreEqual("Іваненко", s.LastName);
-            Assert.AreEqual("Олена", s.FirstName);
-            Assert.AreEqual(3, s.Course);
+            Assert.That(s.LastName, Is.EqualTo("Іваненко"));
+            Assert.That(s.FirstName, Is.EqualTo("Олена"));
+            Assert.That(s.Course, Is.EqualTo(3));
         }
 
         [Test]
@@ -46,24 +46,24 @@ namespace Lab3._5.Tests
         {
             var s = new Student("Іваненко", "Олена", 5, "S1", Sex.Female, "Київ", "Z1");
             s.Promote();
-            Assert.AreEqual(6, s.Course);
+            Assert.That(s.Course, Is.EqualTo(6));
 
-            s.Promote(); // no more than 6
-            Assert.AreEqual(6, s.Course);
+            s.Promote();
+            Assert.That(s.Course, Is.EqualTo(6));
         }
 
         [Test]
         public void IsFemaleFifthCourse_WorksCorrectly()
         {
             var s = new Student("А", "Б", 5, "S", Sex.Female, "Київ", "Z");
-            Assert.IsTrue(s.IsFemaleFifthCourse());
+            Assert.That(s.IsFemaleFifthCourse(), Is.True);
         }
 
         [Test]
         public void LivesPermanentlyIn_IsCaseInsensitive()
         {
             var s = new Student("А", "Б", 3, "S", Sex.Female, "Київ", "Z");
-            Assert.IsTrue(s.LivesPermanentlyIn("киЇв"));
+            Assert.That(s.LivesPermanentlyIn("киЇв"), Is.True);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Lab3._5.Tests
         {
             var s = new Student("А", "Б", 3, "S", Sex.Female, "Київ", "Z");
             s.MoveTo("Львів");
-            Assert.AreEqual("Львів", s.Residence);
+            Assert.That(s.Residence, Is.EqualTo("Львів"));
         }
 
         [Test]
@@ -84,16 +84,16 @@ namespace Lab3._5.Tests
         [Test]
         public void ShouldBePlacedInDormOnRelocation_Works()
         {
-            Assert.IsTrue(Student.ShouldBePlacedInDormOnRelocation("Київ", "Львів"));
-            Assert.IsTrue(Student.ShouldBePlacedInDormOnRelocation("", "Львів"));
-            Assert.IsFalse(Student.ShouldBePlacedInDormOnRelocation("Київ", "Київ"));
+            Assert.That(Student.ShouldBePlacedInDormOnRelocation("Київ", "Львів"), Is.True);
+            Assert.That(Student.ShouldBePlacedInDormOnRelocation("", "Львів"), Is.True);
+            Assert.That(Student.ShouldBePlacedInDormOnRelocation("Київ", "Київ"), Is.False);
         }
 
         [Test]
         public void ToString_ReturnsNonEmptyString()
         {
             var s = new Student("А", "Б", 3, "S", Sex.Female, "Київ", "Z");
-            Assert.IsNotEmpty(s.ToString());
+            Assert.That(s.ToString(), Is.Not.Empty);
         }
     }
 }
