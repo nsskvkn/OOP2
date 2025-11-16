@@ -19,10 +19,10 @@ namespace Lab3._5.BLL
         public Student(string lastName, string firstName, int course, string studentId, Sex sex, string residence, string gradebookNumber)
         {
             if (string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException("LastName required");
+                throw new ArgumentException("Прізвище обов'язкове");
 
             if (string.IsNullOrWhiteSpace(firstName))
-                throw new ArgumentException("FirstName required");
+                throw new ArgumentException("Ім'я обов'язкове");
 
             if (course < 1 || course > 6)
                 throw new ArgumentOutOfRangeException(nameof(course));
