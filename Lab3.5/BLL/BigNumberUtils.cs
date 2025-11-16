@@ -10,29 +10,27 @@ namespace Lab3._5.BLL
     {
         public static string Multiply(string a, string b)
         {
+            if (string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b)) return "0";
+            if (!a.All(char.IsDigit) || !b.All(char.IsDigit)) throw new System.ArgumentException("Only digits allowed");
             if (a == "0" || b == "0") return "0";
-            if (!a.All(char.IsDigit) || !b.All(char.IsDigit))
-                throw new ArgumentException();
 
             var A = a.Reverse().Select(c => c - '0').ToArray();
             var B = b.Reverse().Select(c => c - '0').ToArray();
-
-            var result = new int[A.Length + B.Length];
+            var res = new int[A.Length + B.Length];
 
             for (int i = 0; i < A.Length; i++)
                 for (int j = 0; j < B.Length; j++)
-                    result[i + j] += A[i] * B[j];
+                    res[i + j] += A[i] * B[j];
 
-            for (int i = 0; i < result.Length - 1; i++)
+            for (int i = 0; i < res.Length - 1; i++)
             {
-                result[i + 1] += result[i] / 10;
-                result[i] %= 10;
+                res[i + 1] += res[i] / 10;
+                res[i] %= 10;
             }
 
-            int k = result.Length - 1;
-            while (k > 0 && result[k] == 0) k--;
-
-            return string.Concat(result.Take(k + 1).Reverse());
+            int k = res.Length - 1;
+            while (k > 0 && res[k] == 0) k--;
+            return string.Concat(res.Take(k + 1).Reverse());
         }
     }
 }

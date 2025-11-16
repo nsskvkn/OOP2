@@ -29,18 +29,18 @@ namespace Lab3._5.Tests
         public void LoadAll_ReturnsEmpty_WhenFileMissing()
         {
             File.Delete(_path!);
-            var repo = new JsonFileStudentRepository(_path!);
+            var repo = new JsonRepository(_path!);
 
-            var list = repo.LoadAll().ToList();
+            var list = repo.GetFromFile().ToList();
             Assert.That(list.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void SaveAll_CreatesFile()
         {
-            var repo = new JsonFileStudentRepository(_path!);
+            var repo = new JsonRepository(_path!);
 
-            repo.SaveAll(new List<Student>
+            repo.SaveToFile(new List<Student>
             {
                 new Student("A","B",3,"S1",Sex.Female,"Kyiv","Z1")
             });
@@ -51,7 +51,7 @@ namespace Lab3._5.Tests
         [Test]
         public void SaveLoad_CycleTest()
         {
-            var repo = new JsonFileStudentRepository(_path!);
+            var repo = new JsonRepository(_path!);
 
             var original = new List<Student>
             {
@@ -59,7 +59,7 @@ namespace Lab3._5.Tests
                 new Student("C","D",4,"S2",Sex.Male,"Lviv","Z2")
             };
 
-            repo.SaveAll(original);
+            repo.SaveToFile(original);
 
             var loaded = repo.LoadAll().ToList();
 

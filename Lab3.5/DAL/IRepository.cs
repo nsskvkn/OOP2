@@ -7,9 +7,10 @@ using Lab3._5.BLL;
 
 namespace Lab3._5.DAL
 {
-    public interface IStudentRepository
+    public interface IRepository
     {
-        IEnumerable<Student> LoadAll();
-        void SaveAll(IEnumerable<Student> students);
+        string FilePath { get; set; }
+        void SaveToFile<T>(ICollection<T> objects);
+        ICollection<T>? GetFromFile<T>();
     }
 }

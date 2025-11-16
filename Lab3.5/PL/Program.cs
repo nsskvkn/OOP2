@@ -8,27 +8,27 @@ using Lab3._5.DAL;
 
 namespace Lab3._5.PL
 {
-    class Program
+     class Program
     {
         static void Main(string[] args)
         {
-            var file = args.Length > 0 ? args[0] : "students.json";
+            var path = args.Length > 0 ? args[0] : "students.json";
+            var service = StudentService.CreateJsonEntityService(path);
 
-            var repo = new JsonFileStudentRepository(file);
-            var service = new StudentService(repo);
+            var load = service.LoadFromFile();
+            if (!load.IsSuccess) Console.WriteLine($"Load warning: {load.Message}");
 
-            var femalesInKyiv = service.GetFemaleFifthCourseInCity("Київ").ToList();
+            var kyivGirls = service.GetFemaleFifthCourseInCity("Київ");
+            Console.WriteLine($"Кількість студенток 5-го курсу, що постійно проживають у Києві: {kyivGirls?.Count() ?? 0}");
+            foreach (var s in kyivGirls!) Console.WriteLine(s);
 
-            Console.WriteLine($"Студенток 5 курсу з Києва: {femalesInKyiv.Count}");
-            foreach (var s in femalesInKyiv)
-                Console.WriteLine(s);
+            Console.WriteLine();
+            var photog = new Photographer("Олег");
+            photog.TakePhonePhoto();
+            photog.TakeProCameraPhoto();
 
-            Console.WriteLine("Множення великих чисел:");
-            Console.WriteLine(BigNumberUtils.Multiply("123456789", "987654321"));
-
-            Console.WriteLine("Додаткові уміння:");
-            new Photographer("Олег").TakePhoto("Професійний фотоапарат");
-            new Joiner("Петро").DoJoin();
+            Console.WriteLine();
+            Console.WriteLine("123456789 × 987654321 = " + BigNumberUtils.Multiply("123456789", "987654321"));
         }
     }
 }

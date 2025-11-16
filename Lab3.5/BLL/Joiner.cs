@@ -10,11 +10,11 @@ namespace Lab3._5.BLL
     {
         public string Name { get; set; }
 
-        public Joiner(string name) => Name = name;
+        public Joiner(string name) => Name = name ?? "Joiner";
 
         public void DoJoin()
         {
-            Console.WriteLine($"{Name} виконує з'єднання деталей");
+            Console.WriteLine($"{Name} виконує з'єднання деталей.");
         }
     }
 }
