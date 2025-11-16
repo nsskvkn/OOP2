@@ -20,13 +20,10 @@ namespace Lab3._5.BLL
 
         public IEnumerable<Student> GetFemaleFifthCourseInCity(string city)
         {
-            return _cache.Where(s =>
-                s.IsFemaleFifthCourse() &&
-                s.LivesPermanentlyIn(city));
+            return _cache.Where(s => s.IsFemaleFifthCourse() && s.LivesPermanentlyIn(city));
         }
 
-        public int CountFemaleFifthCourseInCity(string city) =>
-            GetFemaleFifthCourseInCity(city).Count();
+        public int CountFemaleFifthCourseInCity(string city) => GetFemaleFifthCourseInCity(city).Count();
 
         public void MoveStudent(Student student, string newResidence, bool assignDorm = true)
         {
